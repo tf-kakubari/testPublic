@@ -28,4 +28,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - run: sleep 120
       - run: echo CI frontend
