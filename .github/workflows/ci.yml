@@ -13,6 +13,8 @@ on:
       - prd
       - dev
 
+env:
+  ENVIRONMENT: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
 
 jobs:
   ci:
@@ -20,10 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
     steps:
-      - run: echo event_name ${{ github.event_name }}
-      - run: echo base_ref ${{ github.base_ref }}
-      - run: echo ref ${{ github.ref }}
-      - run: echo ref_name ${{ github.ref_name }}
+      - run: echo if merge ${{ github.event.pull_request.merged }}
+      - run: echo ${{ env.ENVIRONMENT }}
+      - run: sleep 10
       - run: echo vars ${{ vars.test }}
   cd:
     if: ${{ github.event.pull_request.merged == true || github.event_name != 'pull_request' }}
@@ -31,7 +32,7 @@ jobs:
     needs: ci
     environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
     steps:
-      - run: echo event_name ${{ github.event_name }}
-      - run: echo base_ref ${{ env.ENVIRONMENT }}
+      - run: echo if merge ${{ github.event.pull_request.merged }}
+      - run: echo ${{ env.ENVIRONMENT }}
+      - run: sleep 20
       - run: echo vars ${{ vars.test }}
-      - run: echo this is CD
