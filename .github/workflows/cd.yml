@@ -14,7 +14,8 @@ env:
 
 jobs:
   test:
-    if: ${{ github.event.pull_request.merged == true }}
+    # 「PRがマージされたとき」または「ワークフローが呼び出された場合」実行する
+    if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_run' }}
     runs-on: ubuntu-latest
     environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
     steps:

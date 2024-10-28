@@ -18,7 +18,8 @@ env:
 
 jobs:
   ci:
-    if: ${{ github.event.pull_request.merged == false }}
+    # 「PRがトリガーのとき」または「直接マージのとき」のみ実行する
+    if: ${{ github.event_name != 'push' || startsWith(github.ref, 'refs/heads/') }}
     runs-on: ubuntu-latest
     environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
     steps:
@@ -27,12 +28,7 @@ jobs:
       - run: sleep 10
       - run: echo vars ${{ vars.test }}
   cd:
-    if: ${{ github.event.pull_request.merged == true || github.event_name != 'pull_request' }}
-    runs-on: ubuntu-latest
+    # 「直接マージのとき」はCDも実行する
+    if: ${{ startsWith(github.ref, 'refs/heads/') }}
     needs: ci
-    environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
-    steps:
-      - run: echo if merge ${{ github.event.pull_request.merged }}
-      - run: echo ${{ env.ENVIRONMENT }}
-      - run: sleep 20
-      - run: echo vars ${{ vars.test }}
+    uses: ./.github/workflows/cd.yml
