@@ -9,6 +9,7 @@ on:
       - closed
     branches:
       - dev
+  workflow_call:
 
 env:
   ENVIRONMENT: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
