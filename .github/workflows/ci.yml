@@ -1,0 +1,27 @@
+name: test
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - dev
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
+    steps:
+      - run: echo event_name ${{ github.event_name }}
+      - run: echo base_ref ${{ github.base_ref }}
+      - run: echo ref ${{ github.ref }}
+      - run: echo ref_name ${{ github.ref_name }}
+      - run: echo vars ${{ vars.test }}
+      - if: ${{ github.event_name != 'pull_request' }}
+        run: echo cdも実行します
