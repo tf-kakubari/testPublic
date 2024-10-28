@@ -4,9 +4,16 @@ on:
   push:
   pull_request:
 
+env:
+  ENVIRONMENT: ${{ github.base_ref }} # 環境名取得
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
     steps:
-      - run: echo ${{ github.ref }}
-      - run: echo ${{ github.ref_name }}
+      - run: echo event_name ${{ github.event_name }}
+      - run: echo base_ref ${{ github.base_ref }}
+      - run: echo ref ${{ github.ref }}
+      - run: echo ref_name ${{ github.ref_name }}
+      - run: echo vars ${{ vars.test }}
