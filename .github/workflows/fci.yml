@@ -10,6 +10,13 @@ on:
       - main
     paths:
       - 'frontend/**'
+  push:
+    branches:
+      - tmp
+    paths:
+      - 'frontend/**'
+    tags:
+      - v*
 
 defaults:
   run:
