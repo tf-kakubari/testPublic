@@ -1,13 +1,11 @@
 name: cd
 
 on:
-  push:
-    branches:
-      - dev
   pull_request:
     types:
       - closed
     branches:
+      - prd
       - dev
   workflow_call:
 
