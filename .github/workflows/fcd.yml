@@ -1,33 +1,32 @@
-name: CD
+# name: CD
 
-on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - main
-    paths:
-      - 'frontend/**'
+# on:
+#   pull_request:
+#     types:
+#       - closed
+#     branches:
+#       - main
+#     paths:
+#       - 'frontend/**'
 
-defaults:
-  run:
-    shell: bash
+# defaults:
+#   run:
+#     shell: bash
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.ref }}
+#   cancel-in-progress: true
 
-permissions: write-all
+# permissions: write-all
 
-jobs:
-  fci:
-    if: ${{ github.event.pull_request.merged == true }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 'frontend/'
+# jobs:
+#   fci:
+#     if: ${{ github.event.pull_request.merged == true }}
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: 'frontend/'
 
-    steps:
-      - uses: actions/checkout@v4
-      - run: 
-      - run: echo CD frontend
+#     steps:
+#       - uses: actions/checkout@v4
+#       - run: echo CD frontend
