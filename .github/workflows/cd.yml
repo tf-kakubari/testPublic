@@ -1,4 +1,4 @@
-name: test
+name: cd
 
 on:
   push:
@@ -6,9 +6,7 @@ on:
       - dev
   pull_request:
     types:
-      - opened
-      - synchronize
-      - reopened
+      - closed
     branches:
       - dev
 
