@@ -1,0 +1,27 @@
+name: test
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - dev
+
+env:
+  ENVIRONMENT: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
+
+jobs:
+  test:
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
+    steps:
+      - run: echo event_name ${{ github.event_name }}
+      - run: echo base_ref ${{ env.ENVIRONMENT }}
+      - run: echo vars ${{ vars.test }}
+      - run: echo this is CD

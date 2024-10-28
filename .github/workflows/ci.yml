@@ -12,8 +12,6 @@ on:
     branches:
       - dev
 
-env:
-  ENVIRONMENT: ${{ github.base_ref }} # 環境名取得
 
 jobs:
   test:
@@ -25,3 +23,5 @@ jobs:
       - run: echo ref ${{ github.ref }}
       - run: echo ref_name ${{ github.ref_name }}
       - run: echo vars ${{ vars.test }}
+      - if: ${{ github.event_name != 'pull_request' }}
+        run: echo cdも実行します
