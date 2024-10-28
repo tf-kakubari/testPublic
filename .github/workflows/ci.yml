@@ -1,4 +1,4 @@
-name: test
+name: ci
 
 on:
   push:
@@ -15,6 +15,7 @@ on:
 
 jobs:
   test:
+    if: ${{ github.event.pull_request.merged != true }}
     runs-on: ubuntu-latest
     environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
     steps:
