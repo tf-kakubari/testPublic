@@ -2,7 +2,15 @@ name: test
 
 on:
   push:
+    branches:
+      - dev
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - dev
 
 env:
   ENVIRONMENT: ${{ github.base_ref }} # 環境名取得
