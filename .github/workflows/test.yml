@@ -2,15 +2,11 @@ name: test
 
 on:
   push:
-    branches:
-      - tmp
-    paths:
-      - 'frontend/**'
-    tags:
-      - v*
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo CI frontend
+      - run: echo ${{ github.ref }}
+      - run: echo ${{ github.ref_name }}
