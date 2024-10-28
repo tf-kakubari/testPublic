@@ -1,0 +1,33 @@
+# name: CI infra
+
+# on:
+#   pull_request:
+#     types:
+#       - opened
+#       - synchronize
+#       - reopened
+#     branches:
+#       - main
+#     paths:
+#       - 'frontend-infra/**'
+
+# defaults:
+#   run:
+#     shell: bash
+
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.ref }}
+#   cancel-in-progress: true
+
+# permissions: write-all
+
+# jobs:
+#   fci:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: 'frontend-infra/'
+
+#     steps:
+#       - uses: actions/checkout@v4
+#       - run: echo CI infra
