@@ -12,7 +12,7 @@ on:
   push:
 
 env:
-  ENVIRONMENT: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
+  STACK: pre-${{ vars.TEST }}-suf
 
 jobs:
   ci:
@@ -22,7 +22,5 @@ jobs:
       TEST: ${{ vars.TEST }}
     steps:
       - run: echo if merge ${{ github.event.pull_request.merged }}
-      - run: echo branch ${{ env.ENVIRONMENT }}
-      - run: sleep 10
-      - run: echo vars ${{ vars.test }}
+      - run: echo STACK ${{ env.STACK }}
       - run: echo env ${{ env.test }}
