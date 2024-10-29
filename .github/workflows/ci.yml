@@ -1,34 +1,28 @@
 name: ci
 
 on:
+  # pull_request:
+  #   types:
+  #     - opened
+  #     - synchronize
+  #     - reopened
+  #   branches:
+  #     - prd
+  #     - dev
   push:
-    branches:
-      - dev
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-    branches:
-      - prd
-      - dev
 
 env:
   ENVIRONMENT: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
 
 jobs:
   ci:
-    # 「PRがトリガーのとき」または「直接マージのとき」のみ実行する
-    if: ${{ github.event_name != 'push' || startsWith(github.ref, 'refs/heads/') }}
     runs-on: ubuntu-latest
     environment: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
+    env:
+      TEST: ${{ vars.TEST }}
     steps:
       - run: echo if merge ${{ github.event.pull_request.merged }}
-      - run: echo ${{ env.ENVIRONMENT }}
+      - run: echo branch ${{ env.ENVIRONMENT }}
       - run: sleep 10
       - run: echo vars ${{ vars.test }}
-  cd:
-    # 「直接マージのとき」はCDも実行する
-    if: ${{ startsWith(github.ref, 'refs/heads/') }}
-    needs: ci
-    uses: ./.github/workflows/cd.yml
+      - run: echo env ${{ env.test }}
