@@ -1,17 +1,11 @@
 name: ci
 
 on:
-  push:
-    branches:
-      - dev
   pull_request:
     types:
       - opened
       - synchronize
       - reopened
-    branches:
-      - prd
-      - dev
 
 env:
   ENVIRONMENT: ${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
